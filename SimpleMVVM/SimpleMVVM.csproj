@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-windows;net8.0-windows;</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<UseWPF>true</UseWPF>
+
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageId>SimpleMVVM</PackageId>
+	  <Version>0.9.0</Version>
+	  <Authors>Derek Gooding</Authors>
+	  <Company>Derek Gooding</Company>
+	  <Description>
+		  A lightweight dependency injection container with automatic service discovery and powerful source generation for content management.
+		  Features attribute-based registration ([Singleton], [Scoped], [Transient]), automatic enum generation from collections,
+		  type-safe content access, and Roslyn analyzers for performance optimization.
+	  </Description>
+	  <PackageTags>
+		  dependency-injection;DI;IoC;container;source-generator;roslyn;analyzer;
+		  content-management;enum-generation;performance;csharp;dotnet;
+		  singleton;scoped;transient;service-locator;automatic-registration;
+		  type-safety;code-generation;lightweight;minimal;simple
+	  </PackageTags>
+
+	  <Summary>
+		  Lightweight DI container with source generation - automatic service discovery,
+		  enum generation from content collections, and performance-optimized analyzers.
+	  </Summary>
+
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageProjectUrl>https://github.com/DerekGooding/SimpleInjection</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/DerekGooding/SimpleInjection</RepositoryUrl>
+	  <PackageBugTrackerUrl>https://github.com/DerekGooding/SimpleInjection/issues</PackageBugTrackerUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <RepositoryBranch>main</RepositoryBranch>
+	  <RepositoryCommit>$(GitCommitId)</RepositoryCommit>
+
+	  <PackageIcon>Icon.png</PackageIcon>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <DocumentationFile>bin\SimpleMVVM.xml</DocumentationFile>
+
+	  <Copyright>Copyright © Derek Gooding 2025</Copyright>
+	  <Product>SimpleMVVM</Product>
+	  <AssemblyTitle>SimpleMVVM - Lightweight windows only WPF MVVM with Source Generation</AssemblyTitle>
+	  <AssemblyDescription>$(Description)</AssemblyDescription>
+	  <NeutralLanguage>en-US</NeutralLanguage>
+
+	  <DevelopmentDependency>false</DevelopmentDependency>
+	  <IsTool>false</IsTool>
+
+	  <PackageType>Dependency</PackageType>
+	  <MinClientVersion>4.1.0</MinClientVersion>
+	  <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <None Include="..\Icon.png" Pack="true" PackagePath="" />
+	  <None Include="..\README.md" Pack="true" PackagePath="" />
+	  <None Include="$(MSBuildThisFileDirectory)../ViewModelGenerator/bin/Release/netstandard2.0/ViewModelGenerator.dll"
+			Pack="true"
+			PackagePath="analyzers/dotnet/cs/"
+			Condition="Exists('$(MSBuildThisFileDirectory)../ViewModelGenerator/bin/Release/netstandard2.0/ViewModelGenerator.dll')" />
+  </ItemGroup>
+
+</Project>

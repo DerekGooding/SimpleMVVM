@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVVM", "SimpleMVVM\SimpleMVVM.csproj", "{BA71A860-3099-4D56-AF32-28E84C602E74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelGenerator", "ViewModelGenerator\ViewModelGenerator.csproj", "{529954DF-428A-4403-8D15-3B0B266223D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA71A860-3099-4D56-AF32-28E84C602E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA71A860-3099-4D56-AF32-28E84C602E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA71A860-3099-4D56-AF32-28E84C602E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA71A860-3099-4D56-AF32-28E84C602E74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{529954DF-428A-4403-8D15-3B0B266223D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{529954DF-428A-4403-8D15-3B0B266223D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{529954DF-428A-4403-8D15-3B0B266223D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{529954DF-428A-4403-8D15-3B0B266223D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC544EF8-C1B0-4BCE-A9D8-7AE39318D16D}
+	EndGlobalSection
+EndGlobal
