@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace SimpleMVVM;
+namespace SimpleMVVM.BaseClasses;
 
 /// <summary>
 /// Provides a base implementation of the <see cref="ICommand"/> interface for WPF MVVM scenarios.
