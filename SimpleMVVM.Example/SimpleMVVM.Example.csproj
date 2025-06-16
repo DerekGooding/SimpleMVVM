@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleMVVM\SimpleMVVM.csproj" />
+    <Reference Include="SimpleMVVM">
+      <HintPath>..\SimpleMVVM\bin\Release\net9.0-windows\SimpleMVVM.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
