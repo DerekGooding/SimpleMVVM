@@ -1,0 +1,80 @@
+name: Publish .NET Package to NuGet
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0'
+
+      - name: Get the version from the .csproj file
+        id: get_version
+        run: |
+          VERSION=$(cat SimpleViewModel/SimpleViewModel.csproj | grep -oPm1 "(?<=<Version>)[^<]+")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Get the latest published version from NuGet
+        id: get_latest_version
+        run: |
+          LATEST_VERSION=$(curl -s "https://api.nuget.org/v3-flatcontainer/simpleviewmodel/index.json" | jq -r '.versions[-1]')
+          echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+
+      - name: Compare versions
+        id: version_check
+        run: |
+          if [ "$VERSION" != "$LATEST_VERSION" ]; then
+            echo "New version detected: $VERSION"
+            echo "run_publish=true" >> $GITHUB_ENV
+          else
+            echo "No new version detected"
+            echo "run_publish=false" >> $GITHUB_ENV
+          fi
+            
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build the project and source generator
+        run: |
+          dotnet build SimpleViewModel/SimpleViewModel.csproj --configuration Release --no-restore
+          dotnet build EnumSourceGenerator/EnumSourceGenerator.csproj --configuration Release --no-restore
+
+      - name: Pack the NuGet package
+        run: |
+          dotnet pack SimpleViewModel/SimpleViewModel.csproj --configuration Release --no-build --output ./nupkg
+          mkdir -p ./nupkg/analyzers/dotnet/cs/
+          if [ -f EnumSourceGenerator/bin/Release/netstandard2.0/EnumSourceGenerator.dll ]; then
+          echo "Source Generator DLL found, copying..."
+          cp EnumSourceGenerator/bin/Release/netstandard2.0/EnumSourceGenerator.dll ./nupkg/analyzers/dotnet/cs/
+          else
+            echo "Source Generator DLL not found! Exiting."
+            exit 1
+          fi
+            ls ./nupkg/analyzers/dotnet/cs/
+
+      - name: Unzip the NuGet package for inspection
+        run: |
+          mkdir -p ./package-inspection
+          unzip ./nupkg/*.nupkg -d ./package-inspection/
+          ls -R ./package-inspection
+          if [ -f ./package-inspection/analyzers/dotnet/cs/EnumSourceGenerator.dll ]; then
+            echo "Source Generator DLL is correctly packed!"
+          else
+            echo "Source Generator DLL is missing from the package!" && exit 1
+          fi
+
+      - name: Publish to NuGet
+        if: env.run_publish == 'true'
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        continue-on-error: true
