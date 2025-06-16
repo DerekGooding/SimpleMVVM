@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace SimpleMVVM.BaseClasses;
+namespace SimpleViewModel.BaseClasses;
 
 /// <summary>
 /// Provides a base implementation of <see cref="INotifyPropertyChanged"/> for view models in a WPF MVVM application.
