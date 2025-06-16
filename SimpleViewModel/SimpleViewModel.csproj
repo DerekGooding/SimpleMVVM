@@ -9,7 +9,7 @@
 
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageId>SimpleViewModel</PackageId>
-	  <Version>0.9.2</Version>
+	  <Version>0.9.3</Version>
 	  <Authors>Derek Gooding</Authors>
 	  <Company>Derek Gooding</Company>
 	  <Description>
@@ -31,20 +31,20 @@
 
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <PackageProjectUrl>https://github.com/DerekGooding/SimpleMVVM</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/DerekGooding/SimpleMVVM</RepositoryUrl>
-	  <PackageBugTrackerUrl>https://github.com/DerekGooding/SimpleMVVM/issues</PackageBugTrackerUrl>
+	  <PackageProjectUrl>https://github.com/DerekGooding/SimpleViewModel</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/DerekGooding/SimpleViewModel</RepositoryUrl>
+	  <PackageBugTrackerUrl>https://github.com/DerekGooding/SimpleViewModel/issues</PackageBugTrackerUrl>
 	  <RepositoryType>git</RepositoryType>
 	  <RepositoryBranch>main</RepositoryBranch>
 	  <RepositoryCommit>$(GitCommitId)</RepositoryCommit>
 
 	  <PackageIcon>Icon.png</PackageIcon>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <DocumentationFile>bin\SimpleMVVM.xml</DocumentationFile>
+	  <DocumentationFile>bin\SimpleViewModel.xml</DocumentationFile>
 
 	  <Copyright>Copyright © Derek Gooding 2025</Copyright>
-	  <Product>SimpleMVVM</Product>
-	  <AssemblyTitle>SimpleMVVM - Lightweight windows only WPF MVVM with Source Generation</AssemblyTitle>
+	  <Product>SimpleViewModel</Product>
+	  <AssemblyTitle>SimpleViewModel - Lightweight windows only WPF MVVM with Source Generation</AssemblyTitle>
 	  <AssemblyDescription>$(Description)</AssemblyDescription>
 	  <NeutralLanguage>en-US</NeutralLanguage>
 

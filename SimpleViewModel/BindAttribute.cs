@@ -1,4 +1,4 @@
 ﻿namespace SimpleViewModel;
 
-[AttributeUsage(AttributeTargets.Property)]
+[AttributeUsage(AttributeTargets.Field)]
 public sealed class BindAttribute : Attribute;

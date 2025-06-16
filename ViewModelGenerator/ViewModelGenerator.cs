@@ -30,56 +30,64 @@ public class ViewModelGenerator : IIncrementalGenerator
 
         context.RegisterSourceOutput(compilationAndClasses, static (spc, source) =>
         {
-            var (compilation, classNodes) = source;
+        var (compilation, classNodes) = source;
 
-            foreach (var classNode in classNodes)
-            {
-                var model = compilation.GetSemanticModel(classNode.SyntaxTree);
-                if (model.GetDeclaredSymbol(classNode) is not INamedTypeSymbol symbol) continue;
+        foreach (var classNode in classNodes)
+        {
+            var model = compilation.GetSemanticModel(classNode.SyntaxTree);
+            if (model.GetDeclaredSymbol(classNode) is not INamedTypeSymbol symbol) continue;
 
-                if (!symbol.GetAttributes().Any(attr => attr.AttributeClass?.Name == "ViewModelAttribute")) continue;
+            if (!symbol.GetAttributes().Any(attr => attr.AttributeClass?.Name == "ViewModelAttribute")) continue;
 
-                var className = symbol.Name;
-                var generatedName = $"{className}";
-                var namespaceName = symbol.ContainingNamespace.ToDisplayString();
+            var className = symbol.Name;
+            var generatedName = $"{className}";
+            var namespaceName = symbol.ContainingNamespace.ToDisplayString();
 
-                var bindFields = symbol.GetMembers()
-                    .OfType<IFieldSymbol>()
-                    .Where(f => f.GetAttributes().Any(attr => attr.AttributeClass?.Name == "BindAttribute"))
-                    .ToList();
+            var bindFields = symbol.GetMembers()
+                .OfType<IFieldSymbol>()
+                .Where(f => f.GetAttributes().Any(attr => attr.AttributeClass?.Name == "BindAttribute"))
+                .ToList();
 
-                var commandMethods = symbol.GetMembers()
-                    .OfType<IMethodSymbol>()
-                    .Where(m => m.MethodKind == MethodKind.Ordinary &&
-                                m.GetAttributes().Any(attr => attr.AttributeClass?.Name == "CommandAttribute"))
-                    .ToList();
+            var commandMethods = symbol.GetMembers()
+                .OfType<IMethodSymbol>()
+                .Where(m => m.MethodKind == MethodKind.Ordinary &&
+                            m.GetAttributes().Any(attr => attr.AttributeClass?.Name == "CommandAttribute"))
+                .ToList();
 
-                // Generate ViewModel partial class
-                var viewModelBuilder = new StringBuilder($@"
-using SimpleViewModel.BaseClasses;
+            // Generate ViewModel partial class
+            var viewModelBuilder = new StringBuilder(
+$@"using SimpleViewModel.BaseClasses;
 
 namespace {namespaceName}
 {{
     public partial class {className} : BaseViewModel
-    {{
-");
+    {{");
 
-                foreach (var field in bindFields)
-                {
-                    viewModelBuilder.AppendLine($"        public {field.Type} {ToPascal(field.Name)} {{ get; set; }}");
-                }
+            foreach (var field in bindFields)
+            {
+                viewModelBuilder.AppendLine($"        public {field.Type} {ToPascal(field.Name)} {{ get; set; }}");
+            }
 
-                viewModelBuilder.AppendLine();
+            viewModelBuilder.AppendLine();
 
-                foreach (var method in commandMethods)
-                {
-                    var commandClassName = $"Command_{method.Name}";
-                    var commandFieldName = $"{ToPascal(method.Name)}Command";
-                    viewModelBuilder.AppendLine($"        public {commandClassName} {commandFieldName} {{ get; }} = new {commandClassName}(this);");
+            foreach (var field in bindFields)
+            {
+                var fieldType = field.Type.ToDisplayString();
+                var fieldName = ToPascal(field.Name);
+
+                viewModelBuilder.AppendLine($"        public {fieldType} {fieldName} {{ get => {field.Name}; set => SetProperty(ref {field.Name}, value); }}");
+            }
+
+            foreach (var method in commandMethods)
+            {
+                var commandClassName = $"Command_{method.Name}";
+                var commandFieldName = $"{ToPascal(method.Name)}Command";
+                viewModelBuilder.AppendLine($"        private {commandClassName} _{commandFieldName} {{ get; }} = new {commandClassName}(this);");
+                viewModelBuilder.AppendLine($"        public {commandClassName} {commandFieldName} => _{commandFieldName} ??= new(this);");
 
                     // Generate command class per method
-                    var commandBuilder = new StringBuilder($@"
-using SimpleViewModel.BaseClasses;
+                    var commandBuilder = new StringBuilder(
+$@"using SimpleViewModel.BaseClasses;
 
 namespace {namespaceName}
 {{
