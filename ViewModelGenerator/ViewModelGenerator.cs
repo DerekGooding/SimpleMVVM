@@ -40,7 +40,7 @@ public class ViewModelGenerator : IIncrementalGenerator
                 if (!symbol.GetAttributes().Any(attr => attr.AttributeClass?.Name == "ViewModelAttribute")) continue;
 
                 var className = symbol.Name;
-                var generatedName = $"{className}_Generated";
+                var generatedName = $"{className}";
                 var namespaceName = symbol.ContainingNamespace.ToDisplayString();
 
                 var bindFields = symbol.GetMembers()
@@ -56,9 +56,11 @@ public class ViewModelGenerator : IIncrementalGenerator
 
                 // Generate ViewModel partial class
                 var viewModelBuilder = new StringBuilder($@"
+using SimpleMVVM.BaseClasses;
+
 namespace {namespaceName}
 {{
-    public partial class {generatedName} : BaseViewModel
+    public partial class {className} : BaseViewModel
     {{
 ");
 
@@ -77,6 +79,8 @@ namespace {namespaceName}
 
                     // Generate command class per method
                     var commandBuilder = new StringBuilder($@"
+using SimpleMVVM.BaseClasses;
+
 namespace {namespaceName}
 {{
     public sealed class {commandClassName} : BaseCommand

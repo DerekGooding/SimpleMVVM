@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVVM", "SimpleMVVM\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelGenerator", "ViewModelGenerator\ViewModelGenerator.csproj", "{529954DF-428A-4403-8D15-3B0B266223D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVVM.Example", "SimpleMVVM.Example\SimpleMVVM.Example.csproj", "{303FBB60-B038-4B45-BEDA-C4C93E52B607}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{529954DF-428A-4403-8D15-3B0B266223D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{529954DF-428A-4403-8D15-3B0B266223D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{529954DF-428A-4403-8D15-3B0B266223D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{303FBB60-B038-4B45-BEDA-C4C93E52B607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{303FBB60-B038-4B45-BEDA-C4C93E52B607}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{303FBB60-B038-4B45-BEDA-C4C93E52B607}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{303FBB60-B038-4B45-BEDA-C4C93E52B607}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

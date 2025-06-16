@@ -7,7 +7,7 @@
 	<UseWPF>true</UseWPF>
 
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <PackageId>SimpleMVVM</PackageId>
+	  <PackageId>SimpleViewModel</PackageId>
 	  <Version>0.9.0</Version>
 	  <Authors>Derek Gooding</Authors>
 	  <Company>Derek Gooding</Company>
@@ -30,9 +30,9 @@
 
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <PackageProjectUrl>https://github.com/DerekGooding/SimpleInjection</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/DerekGooding/SimpleInjection</RepositoryUrl>
-	  <PackageBugTrackerUrl>https://github.com/DerekGooding/SimpleInjection/issues</PackageBugTrackerUrl>
+	  <PackageProjectUrl>https://github.com/DerekGooding/SimpleMVVM</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/DerekGooding/SimpleMVVM</RepositoryUrl>
+	  <PackageBugTrackerUrl>https://github.com/DerekGooding/SimpleMVVM/issues</PackageBugTrackerUrl>
 	  <RepositoryType>git</RepositoryType>
 	  <RepositoryBranch>main</RepositoryBranch>
 	  <RepositoryCommit>$(GitCommitId)</RepositoryCommit>
