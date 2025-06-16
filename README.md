@@ -1,6 +1,6 @@
-# SimpleMVVM
+# SimpleViewModel
 
-A lightweight WPF MVVM framework with automatic source generation that eliminates boilerplate code while maintaining full control over your view models.
+A lightweight WPF ViewModel framework with automatic source generation that eliminates boilerplate code while maintaining full control over your view models.
 
 ## Features
 
@@ -16,7 +16,7 @@ A lightweight WPF MVVM framework with automatic source generation that eliminate
 ### Installation
 
 ```xml
-<PackageReference Include="SimpleMVVM" Version="0.9.0" />
+<PackageReference Include="SimpleViewModel" Version="0.9.0" />
 ```
 
 ### Basic Usage
@@ -24,8 +24,8 @@ A lightweight WPF MVVM framework with automatic source generation that eliminate
 1. **Create a ViewModel**:
 
 ```csharp
-using SimpleMVVM;
-using SimpleMVVM.BaseClasses;
+using SimpleViewModel;
+using SimpleViewModel.BaseClasses;
 
 [ViewModel]
 public partial class MainViewModel : BaseViewModel
@@ -126,7 +126,7 @@ public partial class DocumentViewModel : BaseViewModel
 
 ### Integration with Dependency Injection
 
-SimpleMVVM works seamlessly with dependency injection containers:
+SimpleViewModel works seamlessly with dependency injection containers:
 
 ```csharp
 // Using SimpleInjection (companion package)
@@ -151,7 +151,7 @@ public partial class MainViewModel : BaseViewModel
 
 ## How It Works
 
-SimpleMVVM uses Roslyn source generators to analyze your code at compile time and automatically generate:
+SimpleViewModel uses Roslyn source generators to analyze your code at compile time and automatically generate:
 
 1. **Command Classes**: Each `[Command]` method gets a corresponding `ICommand` implementation
 2. **Command Properties**: Properties that expose the commands for data binding
