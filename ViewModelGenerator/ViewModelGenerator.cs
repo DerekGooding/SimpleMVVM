@@ -75,7 +75,7 @@ namespace {namespaceName}
             {
                 var commandClassName = $"Command_{method.Name}";
                 var commandFieldName = $"{ToPascal(method.Name)}Command";
-                viewModelBuilder.AppendLine($"        private {commandClassName} _{commandFieldName} {{ get; }} = new {commandClassName}(this);");
+                viewModelBuilder.AppendLine($"        private {commandClassName} _{commandFieldName} {{ get; }}");
                 viewModelBuilder.AppendLine($"        public {commandClassName} {commandFieldName} => _{commandFieldName} ??= new(this);");
 
                     // Generate command class per method
