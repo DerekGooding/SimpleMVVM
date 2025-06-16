@@ -48,15 +48,15 @@ jobs:
       - name: Build the project and source generator
         run: |
           dotnet build SimpleViewModel/SimpleViewModel.csproj --configuration Release --no-restore
-          dotnet build EnumSourceGenerator/EnumSourceGenerator.csproj --configuration Release --no-restore
+          dotnet build ViewModelGenerator/ViewModelGenerator.csproj --configuration Release --no-restore
 
       - name: Pack the NuGet package
         run: |
           dotnet pack SimpleViewModel/SimpleViewModel.csproj --configuration Release --no-build --output ./nupkg
           mkdir -p ./nupkg/analyzers/dotnet/cs/
-          if [ -f EnumSourceGenerator/bin/Release/netstandard2.0/EnumSourceGenerator.dll ]; then
+          if [ -f ViewModelGenerator/bin/Release/netstandard2.0/ViewModelGenerator.dll ]; then
           echo "Source Generator DLL found, copying..."
-          cp EnumSourceGenerator/bin/Release/netstandard2.0/EnumSourceGenerator.dll ./nupkg/analyzers/dotnet/cs/
+          cp ViewModelGenerator/bin/Release/netstandard2.0/ViewModelGenerator.dll ./nupkg/analyzers/dotnet/cs/
           else
             echo "Source Generator DLL not found! Exiting."
             exit 1
@@ -68,7 +68,7 @@ jobs:
           mkdir -p ./package-inspection
           unzip ./nupkg/*.nupkg -d ./package-inspection/
           ls -R ./package-inspection
-          if [ -f ./package-inspection/analyzers/dotnet/cs/EnumSourceGenerator.dll ]; then
+          if [ -f ./package-inspection/analyzers/dotnet/cs/ViewModelGenerator.dll ]; then
             echo "Source Generator DLL is correctly packed!"
           else
             echo "Source Generator DLL is missing from the package!" && exit 1
