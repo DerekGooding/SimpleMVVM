@@ -1,4 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
+using System.Linq;
+using System.Text;
 
 namespace ViewModelGenerator;
 
@@ -6,13 +10,108 @@ namespace ViewModelGenerator;
 public class ViewModelGenerator : IIncrementalGenerator
 {
     //Get classes ViewModel attribute
+    //Create partial class the inherits from BaseViewModel with the name of the class
     //Get methods in viewmodel with command attribute
-    //Create new command class with name of method that calls method on execute. 
+    //Create new command class with name of method that calls method on execute and inherits from BaseCommand.
     //?? Figure out how to handle CanExecute cleanly ??
     //
     //Get properties in viewmodel with bind attribute
     //Create a new ObservableProperty with a get/set to the property name
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
-        => throw new System.NotImplementedException();
+    {
+        var viewModelCandidates = context.SyntaxProvider
+            .CreateSyntaxProvider(
+                predicate: static (s, _) => s is ClassDeclarationSyntax,
+                transform: static (ctx, _) => (ClassDeclarationSyntax)ctx.Node)
+            .Where(static cls => cls.AttributeLists.Count > 0);
+
+        var compilationAndClasses = context.CompilationProvider.Combine(viewModelCandidates.Collect());
+
+        context.RegisterSourceOutput(compilationAndClasses, static (spc, source) =>
+        {
+            var (compilation, classNodes) = source;
+
+            foreach (var classNode in classNodes)
+            {
+                var model = compilation.GetSemanticModel(classNode.SyntaxTree);
+                var symbol = model.GetDeclaredSymbol(classNode) as INamedTypeSymbol;
+                if (symbol == null) continue;
+
+                if (!symbol.GetAttributes().Any(attr => attr.AttributeClass?.Name == "ViewModelAttribute")) continue;
+
+                var className = symbol.Name;
+                var generatedName = $"{className}_Generated";
+                var namespaceName = symbol.ContainingNamespace.ToDisplayString();
+
+                var bindFields = symbol.GetMembers()
+                    .OfType<IFieldSymbol>()
+                    .Where(f => f.GetAttributes().Any(attr => attr.AttributeClass?.Name == "BindAttribute"))
+                    .ToList();
+
+                var commandMethods = symbol.GetMembers()
+                    .OfType<IMethodSymbol>()
+                    .Where(m => m.MethodKind == MethodKind.Ordinary &&
+                                m.GetAttributes().Any(attr => attr.AttributeClass?.Name == "CommandAttribute"))
+                    .ToList();
+
+                // Generate ViewModel partial class
+                var viewModelBuilder = new StringBuilder($@"
+namespace {namespaceName}
+{{
+    public partial class {generatedName} : BaseViewModel
+    {{
+");
+
+                foreach (var field in bindFields)
+                {
+                    viewModelBuilder.AppendLine($"        public {field.Type} {ToPascal(field.Name)} {{ get; set; }}");
+                }
+
+                viewModelBuilder.AppendLine();
+
+                foreach (var method in commandMethods)
+                {
+                    var commandClassName = $"Command_{method.Name}";
+                    var commandFieldName = $"{ToPascal(method.Name)}Command";
+                    viewModelBuilder.AppendLine($"        public {commandClassName} {commandFieldName} {{ get; }} = new {commandClassName}(this);");
+
+                    // Generate command class per method
+                    var commandBuilder = new StringBuilder($@"
+namespace {namespaceName}
+{{
+    public sealed class {commandClassName} : BaseCommand
+    {{
+        private readonly {className} vm;
+
+        public {commandClassName}({className} vm)
+        {{
+            this.vm = vm;
+        }}
+
+        public override void Execute(object? parameter)
+        {{
+            vm.{method.Name}();
+        }}
+    }}
+}}
+");
+
+                    spc.AddSource($"{commandClassName}.g.cs", SourceText.From(commandBuilder.ToString(), Encoding.UTF8));
+                }
+
+                viewModelBuilder.AppendLine("    }");
+                viewModelBuilder.AppendLine("}");
+
+                spc.AddSource($"{generatedName}.g.cs", SourceText.From(viewModelBuilder.ToString(), Encoding.UTF8));
+            }
+        });
+    }
+
+    private static string ToPascal(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return name;
+        if (name.StartsWith("_")) name = name.TrimStart('_');
+        return char.ToUpperInvariant(name[0]) + name.Substring(1);
+    }
 }
