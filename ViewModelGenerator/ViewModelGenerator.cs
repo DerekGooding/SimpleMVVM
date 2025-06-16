@@ -56,7 +56,7 @@ public class ViewModelGenerator : IIncrementalGenerator
 
                 // Generate ViewModel partial class
                 var viewModelBuilder = new StringBuilder($@"
-using SimpleMVVM.BaseClasses;
+using SimpleViewModel.BaseClasses;
 
 namespace {namespaceName}
 {{
@@ -79,7 +79,7 @@ namespace {namespaceName}
 
                     // Generate command class per method
                     var commandBuilder = new StringBuilder($@"
-using SimpleMVVM.BaseClasses;
+using SimpleViewModel.BaseClasses;
 
 namespace {namespaceName}
 {{
