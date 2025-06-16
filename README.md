@@ -16,7 +16,7 @@ A lightweight WPF ViewModel framework with automatic source generation that elim
 ### Installation
 
 ```xml
-<PackageReference Include="SimpleViewModel" Version="0.9.3" />
+<PackageReference Include="SimpleViewModel" Version="0.9.4" />
 ```
 
 ### Basic Usage

@@ -61,15 +61,8 @@ $@"using SimpleViewModel.BaseClasses;
 namespace {namespaceName}
 {{
     public partial class {className} : BaseViewModel
-    {{");
-
-            foreach (var field in bindFields)
-            {
-                viewModelBuilder.AppendLine($"        public {field.Type} {ToPascal(field.Name)} {{ get; set; }}");
-            }
-
-            viewModelBuilder.AppendLine();
-
+    {{
+");
             foreach (var field in bindFields)
             {
                 var fieldType = field.Type.ToDisplayString();
