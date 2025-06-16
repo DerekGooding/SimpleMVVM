@@ -35,8 +35,7 @@ public class ViewModelGenerator : IIncrementalGenerator
             foreach (var classNode in classNodes)
             {
                 var model = compilation.GetSemanticModel(classNode.SyntaxTree);
-                var symbol = model.GetDeclaredSymbol(classNode) as INamedTypeSymbol;
-                if (symbol == null) continue;
+                if (model.GetDeclaredSymbol(classNode) is not INamedTypeSymbol symbol) continue;
 
                 if (!symbol.GetAttributes().Any(attr => attr.AttributeClass?.Name == "ViewModelAttribute")) continue;
 

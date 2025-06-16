@@ -1,4 +1,4 @@
 ﻿namespace SimpleMVVM;
 
 [AttributeUsage(AttributeTargets.Class)]
-public sealed class ViewModeAttribute : Attribute;
+public sealed class ViewModelAttribute : Attribute;

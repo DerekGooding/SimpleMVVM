@@ -9,8 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SimpleInjection" Version="0.9.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SimpleMVVM\SimpleMVVM.csproj" />
-    <ProjectReference Include="..\ViewModelGenerator\ViewModelGenerator.csproj" />
   </ItemGroup>
 
 </Project>

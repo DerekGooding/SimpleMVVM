@@ -1,4 +1,4 @@
 ﻿namespace SimpleMVVM;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Property)]
 public sealed class BindAttribute : Attribute;

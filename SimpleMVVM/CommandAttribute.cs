@@ -1,4 +1,4 @@
 ﻿namespace SimpleMVVM;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Method)]
 public sealed class CommandAttribute : Attribute;
