@@ -9,7 +9,7 @@
 
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageId>SimpleViewModel</PackageId>
-	  <Version>0.9.5.2</Version>
+	  <Version>0.9.5.3</Version>
 	  <Authors>Derek Gooding</Authors>
 	  <Company>Derek Gooding</Company>
 	  <Description>
