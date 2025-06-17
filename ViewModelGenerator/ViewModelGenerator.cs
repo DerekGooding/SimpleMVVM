@@ -135,15 +135,37 @@ namespace {namespaceName}
 
     private static string? GetCanExecuteMethodName(IMethodSymbol method)
     {
-        var attribute = method.GetAttributes().First(x => x.AttributeClass?.Name == "CommandAttribute");
-        var argument = attribute.NamedArguments.First(arg => arg.Key == "CanExecuteMethodName");
-        return argument.Value.Value?.ToString();
+        foreach (var attr in method.GetAttributes())
+        {
+            if (attr.AttributeClass?.Name == "CommandAttribute")
+            {
+                foreach (var namedArg in attr.NamedArguments)
+                {
+                    if (namedArg.Key == "CanExecuteMethodName")
+                    {
+                        return namedArg.Value.Value?.ToString();
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private static string? GetOnChangeMethodName(IFieldSymbol field)
     {
-        var attribute = field.GetAttributes().First(x => x.AttributeClass?.Name == "BindAttribute");
-        var argument = attribute.NamedArguments.First(arg => arg.Key == "OnChangeMethodName");
-        return argument.Value.Value?.ToString();
+        foreach (var attr in field.GetAttributes())
+        {
+            if (attr.AttributeClass?.Name == "BindAttribute")
+            {
+                foreach (var namedArg in attr.NamedArguments)
+                {
+                    if (namedArg.Key == "OnChangeMethodName")
+                    {
+                        return namedArg.Value.Value?.ToString();
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
