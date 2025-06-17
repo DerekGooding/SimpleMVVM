@@ -13,20 +13,22 @@
 	  <Authors>Derek Gooding</Authors>
 	  <Company>Derek Gooding</Company>
 	  <Description>
-		  A lightweight dependency injection container with automatic service discovery and powerful source generation for content management.
-		  Features attribute-based registration ([Singleton], [Scoped], [Transient]), automatic enum generation from collections,
-		  type-safe content access, and Roslyn analyzers for performance optimization.
+		  A lightweight WPF MVVM framework with automatic source generation that eliminates boilerplate code.
+		  Features attribute-based command generation ([Command]), automatic observable property creation from fields ([Bind]),
+		  and compile-time code generation with zero runtime reflection. Built specifically for WPF applications
+		  with proper CommandManager integration and INotifyPropertyChanged support.
 	  </Description>
 	  <PackageTags>
-		  dependency-injection;DI;IoC;container;source-generator;roslyn;analyzer;
-		  content-management;enum-generation;performance;csharp;dotnet;
-		  singleton;scoped;transient;service-locator;automatic-registration;
-		  type-safety;code-generation;lightweight;minimal;simple
+		  wpf;mvvm;viewmodel;source-generator;roslyn;command;binding;
+		  inotifypropertychanged;icommand;observable;properties;
+		  code-generation;compile-time;zero-boilerplate;csharp;dotnet;
+		  commandmanager;databinding;wpf-framework;lightweight;
+		  attribute-based;partial-class;baseviewmodel;basecommand
 	  </PackageTags>
 
 	  <Summary>
-		  Lightweight DI container with source generation - automatic service discovery,
-		  enum generation from content collections, and performance-optimized analyzers.
+		  Lightweight WPF MVVM framework with source generation - automatic command and observable property generation
+		  from attributes, eliminating boilerplate code while maintaining full type safety and IntelliSense support.
 	  </Summary>
 
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
