@@ -72,15 +72,14 @@ namespace {namespaceName}
 
                 viewModelBuilder.AppendLine(
 $@"        public {fieldType} {fieldName} {{ get => {field.Name}; 
-                 set 
-                {{
-                    SetProperty(ref {field.Name}, value);");
+            set 
+            {{
+                SetProperty(ref {field.Name}, value);");
 
                 var onChange = GetOnChangeMethodName(field);
                     if (!string.IsNullOrWhiteSpace(onChange))
-                        viewModelBuilder.AppendLine($"   {onChange}();");
-                viewModelBuilder.AppendLine("        }");
-                viewModelBuilder.AppendLine("    }");
+                        viewModelBuilder.AppendLine($"          {onChange}();");
+                viewModelBuilder.AppendLine("        }}");
             }
 
             foreach (var method in commandMethods)
