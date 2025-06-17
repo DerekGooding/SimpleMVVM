@@ -70,7 +70,15 @@ namespace {namespaceName}
                 var fieldType = field.Type.ToDisplayString();
                 var fieldName = ToPascal(field.Name);
 
-                viewModelBuilder.AppendLine($"        public {fieldType} {fieldName} {{ get => {field.Name}; set => SetProperty(ref {field.Name}, value); }}");
+                viewModelBuilder.AppendLine(
+$@"        public {fieldType} {fieldName} {{ get => {field.Name}; set 
+                {{
+                    SetProperty(ref {field.Name}, value);");
+
+                var onChange = GetOnChangeMethodName(field);
+                    if (!string.IsNullOrWhiteSpace(onChange))
+                        viewModelBuilder.AppendLine($"   {onChange}();");
+                viewModelBuilder.AppendLine("        }");
             }
 
             foreach (var method in commandMethods)
@@ -101,10 +109,12 @@ namespace {namespaceName}
         {{
             vm.{method.Name}();
         }}
-    }}
-}}
 ");
-
+                    var canExecute = GetCanExecuteMethodName(method);
+                    if(!string.IsNullOrWhiteSpace(canExecute))
+                        viewModelBuilder.AppendLine($"        public override bool CanExecute(object? parameter) => vm.{canExecute}();");
+                    viewModelBuilder.AppendLine("    }");
+                    viewModelBuilder.AppendLine("}");
                     spc.AddSource($"{commandClassName}.g.cs", SourceText.From(commandBuilder.ToString(), Encoding.UTF8));
                 }
 
@@ -121,5 +131,19 @@ namespace {namespaceName}
         if (string.IsNullOrEmpty(name)) return name;
         if (name.StartsWith("_")) name = name.TrimStart('_');
         return char.ToUpperInvariant(name[0]) + name.Substring(1);
+    }
+
+    private static string? GetCanExecuteMethodName(IMethodSymbol method)
+    {
+        var attribute = method.GetAttributes().First(x => x.AttributeClass?.Name == "CommandAttribute");
+        var argument = attribute.NamedArguments.First(arg => arg.Key == "CanExecuteMethodName");
+        return argument.Value.Value?.ToString();
+    }
+
+    private static string? GetOnChangeMethodName(IFieldSymbol field)
+    {
+        var attribute = field.GetAttributes().First(x => x.AttributeClass?.Name == "BindAttribute");
+        var argument = attribute.NamedArguments.First(arg => arg.Key == "OnChangeMethodName");
+        return argument.Value.Value?.ToString();
     }
 }
