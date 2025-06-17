@@ -71,7 +71,8 @@ namespace {namespaceName}
                 var fieldName = ToPascal(field.Name);
 
                 viewModelBuilder.AppendLine(
-$@"        public {fieldType} {fieldName} {{ get => {field.Name}; set 
+$@"        public {fieldType} {fieldName} {{ get => {field.Name}; 
+                 set 
                 {{
                     SetProperty(ref {field.Name}, value);");
 
@@ -79,6 +80,7 @@ $@"        public {fieldType} {fieldName} {{ get => {field.Name}; set
                     if (!string.IsNullOrWhiteSpace(onChange))
                         viewModelBuilder.AppendLine($"   {onChange}();");
                 viewModelBuilder.AppendLine("        }");
+                viewModelBuilder.AppendLine("    }");
             }
 
             foreach (var method in commandMethods)
@@ -112,9 +114,9 @@ namespace {namespaceName}
 ");
                     var canExecute = GetCanExecuteMethodName(method);
                     if(!string.IsNullOrWhiteSpace(canExecute))
-                        viewModelBuilder.AppendLine($"        public override bool CanExecute(object? parameter) => vm.{canExecute}();");
-                    viewModelBuilder.AppendLine("    }");
-                    viewModelBuilder.AppendLine("}");
+                        commandBuilder.AppendLine($"        public override bool CanExecute(object? parameter) => vm.{canExecute}();");
+                    commandBuilder.AppendLine("    }");
+                    commandBuilder.AppendLine("}");
                     spc.AddSource($"{commandClassName}.g.cs", SourceText.From(commandBuilder.ToString(), Encoding.UTF8));
                 }
 
