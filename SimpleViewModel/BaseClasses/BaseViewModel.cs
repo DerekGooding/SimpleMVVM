@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 
 namespace SimpleViewModel.BaseClasses;
 
@@ -10,11 +9,6 @@ namespace SimpleViewModel.BaseClasses;
 /// </summary>
 public class BaseViewModel : INotifyPropertyChanged
 {
-    /// <summary>
-    /// Indicates whether the view model is running in live (non-design) mode.
-    /// </summary>
-    protected readonly bool _isLive = !DesignerProperties.GetIsInDesignMode(new DependencyObject());
-
     /// <inheritdoc/>
     public event PropertyChangedEventHandler? PropertyChanged;
 
