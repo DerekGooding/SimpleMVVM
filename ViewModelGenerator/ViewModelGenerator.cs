@@ -130,7 +130,7 @@ namespace {namespaceName}
                         commandBuilder.AppendLine($"            vm.{method.Name}();");
                     }
 
-                    commandBuilder.AppendLine("        }");
+                    //commandBuilder.AppendLine("        }");
                     var canExecute = GetCanExecuteMethodName(method);
                     if (!string.IsNullOrWhiteSpace(canExecute))
                         commandBuilder.AppendLine($"        public override bool CanExecute(object? parameter) => vm.{canExecute}();");
